@@ -5,6 +5,37 @@ export class Utils {
 }
 
 export class DynamicHtml {
+
+    static createDraggableItem(dataItem) {
+        const item = document.createElement('div');
+        item.classList.add('draggable-item');
+        item.textContent = dataItem.name;
+        item.draggable = true;
+        item.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', JSON.stringify(dataItem));
+        });
+        return item;
+    }
+
+    static createDropBox(dropHandler) {
+        const dropBox = document.createElement('div');
+        dropBox.classList.add('drop-box');
+        dropBox.addEventListener('dragover', (event) => {
+            event.preventDefault();
+            dropBox.classList.add('drag-over');
+        });
+        dropBox.addEventListener('dragleave', () => {
+            dropBox.classList.remove('drag-over');
+        });
+        dropBox.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropBox.classList.remove('drag-over');
+            const data = JSON.parse(event.dataTransfer.getData('text/plain'));
+            dropHandler(data);
+        });
+        return dropBox;
+    }
+
     static createDeleteButton(onClick) {
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
@@ -35,8 +66,9 @@ export class DynamicHtml {
         return editButton;
     }
 
-    static generateListItems(dataArray, deleteHandler, editHandler) {
-        const container = document.getElementById('list');
+    static generateListItems(dataArray, deleteHandler, editHandler, listContainerId) {
+        const container = document.getElementById(listContainerId);
+
         container.innerHTML = '';
 
         if (dataArray.length === 0) {
@@ -129,25 +161,27 @@ export class Page {
     static generateCrudUserInterface(endpoint, schema, controller) {
         const formContainer = document.getElementById('formContainer');
 
+
+
         const title = Utils.getPageTitle(endpoint);
 
         const listTitle = document.createElement('h2');
         listTitle.textContent = title;
-        document.body.insertBefore(listTitle, document.getElementById('list'));
+        document.body.insertBefore(listTitle, formContainer);
 
-        const formTitle = document.createElement('h2');
-        formTitle.textContent = `Add To ${title}`;
-        document.body.insertBefore(formTitle, formContainer);
+        const listContainer = document.createElement('div');
+        listContainer.id = `${endpoint}List`;
+        document.body.insertBefore(listContainer, formContainer);
 
         const addButton = document.createElement('button');
         addButton.textContent = 'Add New Entry';
         addButton.addEventListener('click', () => {
-            formContainer.innerHTML = ''; // Clear the form container
+            const currentFormContainer = document.getElementById('formContainer');
+            currentFormContainer.innerHTML = ''; // Clear the form container
 
             const form = DynamicHtml.createForm('addForm', schema, controller.createDataEntry.bind(controller));
-            formContainer.appendChild(form);
-            DynamicHtml.createCancelButton(form, formContainer);
-
+            currentFormContainer.appendChild(form);
+            DynamicHtml.createCancelButton(form, currentFormContainer);
         });
         document.body.insertBefore(addButton, formContainer);
 

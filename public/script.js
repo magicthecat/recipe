@@ -40,7 +40,8 @@ class CrudController {
     async updateDataAndList() {
         try {
             const data = await DataController.fetchData(this.endpoint);
-            DynamicHtml.generateListItems(data, this.deletePost.bind(this), this.editPost.bind(this));
+            DynamicHtml.generateListItems(data, this.deletePost.bind(this), this.editPost.bind(this), `${this.endpoint}List`);
+
         } catch (error) {
             console.error('Error:', error);
         }
@@ -197,6 +198,8 @@ class App {
     }
 }
 
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const actorSchema = Schema.new({
         name: 'actorName',
@@ -208,5 +211,14 @@ document.addEventListener('DOMContentLoaded', () => {
         type: 'requirementType',
     });
 
+    const acceptanceCriteria = Schema.new({
+        name: 'acceptanceCriteriaText',
+        type: 'acceptanceCriteriaType',
+    });
+
     App.initialize(actorSchema, 'actors');
+    App.initialize(requirementsSchema, 'requirements');
+    App.initialize(acceptanceCriteria, 'acceptanceCriteria');
+
+
 });

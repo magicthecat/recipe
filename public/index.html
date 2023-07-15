@@ -60,6 +60,40 @@
         .edit-button:hover {
             background-color: #1976D2;
         }
+
+        .drop-box {
+            bottom: 20px;
+            width: 500px;
+            border: 2px dashed #ccc;
+            padding: 100px;
+            margin-top: 50px;
+            margin-left: 20%;
+            margin-right: 20%;
+            text-align: center;
+            background-color: #f8f8f8;
+            font-size: 18px;
+            z-index: 9999;
+        }
+
+        .drop-box.hover {
+            border-color: #888;
+        }
+
+        .drop-box.drag-over {
+            background-color: #eaeaea;
+        }
+
+        .drop-box-message {
+            color: #888;
+        }
+
+        .drop-box-message.hover {
+            color: #555;
+        }
+
+        .drop-box-message.drag-over {
+            color: #333;
+        }
     </style>
 
 </head>
@@ -67,7 +101,6 @@
 <body>
     <h1>JSON Data Display</h1>
 
-    <ul id="list"></ul>
 
     <div id="formContainer"></div>
 
