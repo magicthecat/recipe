@@ -1,32 +1,23 @@
 {
   "actors": [
     {
-      "name": "test3",
-      "type": "testing",
-      "id": 2
-    },
-    {
-      "name": "test5",
-      "type": "sdfsfdasdf",
-      "id": 3
-    },
-    {
-      "name": "TestTeam2",
-      "type": "test",
-      "id": 4
+      "name": "chicken",
+      "type": "pie",
+      "id": 1
     }
   ],
   "requirements": [
     {
-      "name": "test",
-      "type": "testest",
+      "name": "chicken2",
+      "type": "meow",
       "id": 1
-    },
-    {
-      "name": "fsdfdsf",
-      "type": "sdfsdfd",
-      "id": 2
     }
   ],
-  "acceptanceCriteria": []
+  "acceptanceCriteria": [
+    {
+      "name": "cow1",
+      "type": "moo",
+      "id": 1
+    }
+  ]
 }
